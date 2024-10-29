@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Times Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine-ie11.js" integrity="sha512-6m6AtgVSg7JzStQBuIpqoVuGPVSAK5Sp/ti6ySu6AjRDa1pX8mIl1TwP9QmKXU+4Mhq/73SzOk6mbNvyj9MPzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+</head>
+<body>
+ <!-- Require css -->
+<style>
+    .scroll-hidden::-webkit-scrollbar {
+        height: 0px;
+        background: transparent;
+        /* make scrollbar transparent */
+    }
+</style>
+
+<div id="section">
+    <div v-if="stop" v-on:click="stop=false" class="absolute clear-both w-full h-full bg-red-600 t-0 l-0 z-50 opacity-95 grid place-content-center">
+        <div class="mx-auto my-auto text-center">
+            <p class="font-semibold text-2xl">
+                Fin de la manche
+            </p>
+        </div>
+    </div>
+    <section class="bg-white dark:bg-gray-900">
+        <div v-if="step=='param'" class="flex justify-center min-h-screen">
+            <div class="hidden bg-cover lg:block lg:w-2/5" style="background-image: url('https://www.web-print-design.be/portfolio/times-up-party/packaging-carte-jeu.jpg')">
+            </div>
+
+            <div class="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+                <div class="w-full">
+                    <h1 class="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
+                        Times Up !
+                    </h1>
+
+                    <p class="mt-4 text-gray-500 dark:text-gray-400">
+                        Paramètrez votre partie et commencez à jouer !
+                    </p>
+
+                    <div class="mt-6">
+                        <h1 class="text-gray-500 dark:text-gray-300">Nombre d'équipes :</h1>
+
+                        <div class="mt-3 md:flex md:items-center md:-mx-2">
+                            
+                            <button v-if="nbTeam==2" class="flex justify-center w-full px-6 py-3 text-white bg-blue-500 rounded-lg md:w-auto md:mx-2 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+
+                                <span class="mx-2">
+                                    2 équipes
+                                </span>
+                            </button>
+                            <button v-on:click="nbTeam=2" v-if="nbTeam!=2" class="flex justify-center w-full px-6 py-3 mt-4 text-blue-500 border border-blue-500 rounded-lg md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+
+                                <span class="mx-2">
+                                    2 équipes
+                                </span>
+                            </button>
+
+                            <button v-if="nbTeam==3" class="flex justify-center w-full px-6 py-3 text-white bg-blue-500 rounded-lg md:w-auto md:mx-2 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+
+                                <span class="mx-2">
+                                    3 équipes
+                                </span>
+                            </button>
+                            <button v-on:click="nbTeam=3" v-if="nbTeam!=3" class="flex justify-center w-full px-6 py-3 mt-4 text-blue-500 border border-blue-500 rounded-lg md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+
+                                <span class="mx-2">
+                                    3 équipes
+                                </span>
+                            </button>
+
+                            <button v-if="nbTeam==4" class="flex justify-center w-full px-6 py-3 text-white bg-blue-500 rounded-lg md:w-auto md:mx-2 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+
+                                <span class="mx-2">
+                                    4 équipes
+                                </span>
+                            </button>
+                            <button v-on:click="nbTeam=4" v-if="nbTeam!=4" class="flex justify-center w-full px-6 py-3 mt-4 text-blue-500 border border-blue-500 rounded-lg md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+
+                                <span class="mx-2">
+                                    4 équipes
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
+                        <div>
+                            <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Nombre de mot</label>
+                            <input type="number" max="100" min="3" v-model="nbWord" class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Temps par manche (en seconde)</label>
+                            <input type="number" v-model="time" class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-self-center w-full">
+                                <input v-model="manualInput" id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checked-checkbox" class="flex  ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Mot personnalisés</label>
+                            </div>
+                        </div>
+
+                        <button v-if="manualInput==true" v-on:click="changeStep('words')"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Passer à l'enregistrement des mots</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button v-if="manualInput==false" v-on:click="changeStep('generateWord')"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Passer à l'enregistrement des mots</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="step=='words'" class="flex justify-center min-h-screen">
+            <div class="hidden bg-cover lg:block lg:w-2/5" style="background-image: url('https://www.web-print-design.be/portfolio/times-up-party/packaging-carte-jeu.jpg')">
+            </div>
+
+            <div class="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+                <div class="w-full">
+                    <h1 class="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
+                        Times Up !
+                    </h1>
+
+                    <p class="mt-4 text-gray-500 dark:text-gray-400">
+                        Ajouter des mots : [[words.length]]/[[nbWord]] !
+                    </p>
+
+                    <div v-if="printWords" class="mt-6">
+                        <h1 class="text-gray-500 dark:text-gray-300">Mots enregistrés :</h1>
+
+                        <div class="mt-3 flex flex-wrap">
+                            <button v-for="word in words" v-on:click="delWord(word)" class="flex justify-center w-full px-6 py-3 text-blue-500 border border-blue-500 rounded-lg md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none">
+                                <span class="mx-2 mt-2">
+                                    [[word]]
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-1">
+                        <div v-if="words.length<nbWord">
+                            <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Nouveau mot</label>
+                            <input type="text" v-model="newWord" class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                        </div>
+
+                        <button v-if="words.length<nbWord" v-on:click="generateWord()"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Générer un mot aléatoire</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button v-if="words.length<nbWord" v-on:click="addWord()"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Ajouter le mot</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div>
+                            <div class="flex items-center justify-self-center w-full">
+                                <input v-model="printWords" id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checked-checkbox" class="flex  ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Afficher la liste de mots</label>
+                            </div>
+                        </div>
+
+                        <button  :disabled="words.length<nbWord" v-on:click="changeStep('game')"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Commencez la partie</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button v-on:click="changeStep('param')"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Retour</span>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="step=='generateWord'" class="flex justify-center min-h-screen">
+            <div class="hidden bg-cover lg:block lg:w-2/5" style="background-image: url('https://www.web-print-design.be/portfolio/times-up-party/packaging-carte-jeu.jpg')"></div>
+
+            <div class="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+                <div class="w-full">
+                    <h1 class="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
+                        Times Up !
+                    </h1>
+
+                    <div class="mt-6">
+                        <h1 class="text-gray-500 dark:text-gray-300">Type de mots générer :</h1>
+
+                        <div class="mt-3 md:flex md:items-center md:-mx-2 w-4/12">
+                            <button v-on:click="addCategoryToRandomWordCategory('dictionnaire')" class="flex justify-center w-full px-6 py-3 mt-4 border rounded-lg md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none" v-bind:class='{"text-blue-500 border-blue-500":!randomWordCategory.includes("dictionnaire"),"text-white bg-blue-500":randomWordCategory.includes("dictionnaire")}'>
+                                <span class="mx-2">
+                                    Mot du dictionnaire
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div v-if="printWords" class="mt-6">
+                        <h1 class="text-gray-500 dark:text-gray-300">Mots enregistrés :</h1>
+
+                        <div class="mt-3 flex flex-wrap">
+                            <button v-for="word in words" v-on:click="delWord(word)" class="flex justify-center w-full px-6 py-3 text-blue-500 border border-blue-500 rounded-lg md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none">
+                                <span class="mx-2 mt-2">
+                                    [[word]]
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-1">
+                        <div>
+                            <div class="flex items-center justify-self-center w-full">
+                                <input v-model="printWords" id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checked-checkbox" class="flex  ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Afficher la liste de mots ([[words.length]]/[[nbWord]])</label>
+                            </div>
+                        </div>
+
+                        <button v-on:click="generateRandomWords()"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-amber-500 rounded-lg hover:bg-amber-400 focus:outline-none focus:ring focus:ring-amber-300 focus:ring-opacity-50">
+                            <span>Générer les [[nbWord]] mots</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+
+                        <button  :disabled="words.length<nbWord" v-on:click="changeStep('game')"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Commencez la partie</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button v-on:click="changeStep('param')"
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-500 rounded-lg hover:bg-red-400 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-50">
+                            <span>Retour</span>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div v-if="step=='game'" class="container px-6 py-6 mx-auto text-center">
+            <div v-if="manche==1 | manche==2 | manche==3" class="max-w-lg mx-auto">
+                <div class="grid grid-cols-6">
+                    <div class="col-start-1 col-end-3">
+                        <h1 class="text-xl font-semibold text-gray-800 dark:text-white lg:text-4xl">Manche [[manche]]</h1>
+                        <p v-if="manche==1" class="text-gray-500 dark:text-gray-300">Faites deviner le mot sans restriction.</p>
+                        <p v-if="manche==2" class="text-gray-500 dark:text-gray-300">Faites deviner le mot en utilisant un seul mot.</p>
+                        <p v-if="manche==3" class="text-gray-500 dark:text-gray-300">Faites deviner le mot en mimant.</p>
+                    </div>
+                    <div class="col-end-7 col-span-2">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">[[teams[current_team].name]]</h2>
+                        <p  class="text-gray-500 dark:text-gray-300">Mot(s) restant(s) : [[wordsRemaining.length]] sur [[words.length]]</p>
+                    </div>
+                </div>
+                <p class="text-gray-500 dark:text-gray-300">Temps restant : <p v-if="go" class="font-bold">[[timeRemaining]]sec</p><p v-if="go==false" class="font-bold">[[time]]sec</p></p>
+                <button v-if="go==false & resultValid==false" v-on:click="nextTeam()" class="w-full col-end-7 col-span-2 px-6 py-3 mt-8 text-xl font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">Valider et passer à l'équipe suivante !</button>
+                <button v-if="go==false & resultValid==true & wordsRemaining!=0" v-on:click="startGame()" class="w-full col-end-7 col-span-2 px-6 py-3 mt-8 text-xl font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-green-500 rounded-md hover:bg-green-400 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-50">Commencer à faire deviner !</button>
+                <button v-if="go==false & resultValid==true & wordsRemaining==0" v-on:click="endRound()" class="w-full col-end-7 col-span-2 px-6 py-3 mt-8 text-xl font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-amber-500 rounded-md hover:bg-amber-400 focus:outline-none focus:ring focus:ring-amber-300 focus:ring-opacity-50">Passer à la manche suivante !</button>
+                <div v-if="isRoundEnd==true & playing==false">
+                    <div class="flex items-center justify-self-center w-full">
+                        <input v-model="printWordsPass" id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checked-checkbox" class="flex  ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Afficher les mots valider et passer</label>
+                    </div>
+                </div>
+                <div v-if="isRoundEnd==true & printWordsPass==true & isRoundEnd==true & playing==false" class="grid grid-cols-6">
+                    <div class="col-start-1 col-end-3">
+                        <h3>
+                            Mots Validés :
+                        </h3>
+                        <div class="mt-3 md:items-center md:-mx-2">
+                            <button v-for="wordValide in wordsValidate" v-on:click="transfertWord(wordValide)" class="px-6 py-3 mt-2 text-blue-500 border border-blue-500 rounded-lg focus:outline-none">
+                                <span class="mx-2">
+                                    [[wordValide]]
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-end-7 col-span-2">
+                        <h3>
+                            Mots Passés :
+                        </h3>
+                        <div class="mt-3 md:items-center md:-mx-2">
+                            <button v-for="wordPass in wordsPass" v-on:click="transfertWord(wordPass)" class="px-6 py-3 mt-2 text-blue-500 border border-blue-500 rounded-lg focus:outline-none">
+                                <span class="mx-2">
+                                    [[wordPass]]
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4" v-if="isRoundEnd==false">
+                    <h1 class="border-gray-700 px-8 py-4 border-2 font-bold text-gray-800 dark:text-white text-4xl">[[current_word]]</h1>
+                    <div class="mt-6 grid grid-cols-6">
+                        <button v-on:click="passWord()" class="w-full col-start-1 col-end-3 px-16 py-8 mt-4 text-xl font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-500 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-50">
+                            Passer
+                        </button>
+                        <button v-on:click="valideWord()" class="w-full col-end-7 col-span-2 px-16 py-8 mt-4 text-xl font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-green-500 rounded-md hover:bg-green-400 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-50">
+                            Valider
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="manche==0.5 | manche==1.5 | manche==2.5 | manche==3.5" class="max-w-lg mx-auto">
+                <h1 class="text-3xl font-semibold text-gray-800 dark:text-white lg:text-4xl">Récap des scores</h1>
+                <div v-for="team in teams">
+                    <br>
+                    <h1 class="text-3xl font-semibold text-gray-800 dark:text-white lg:text-4xl">[[team.name]]</h1>
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white lg:text-4xl">Score : [[team.score]]</h1>
+                </div>
+
+                <p v-if="manche==0.5" class="mt-6 text-gray-500 dark:text-gray-300">Faites deviner le mot en utilisant sans contraintes ! </p>
+                <p v-if="manche==1.5" class="mt-6 text-gray-500 dark:text-gray-300">Faites deviner le mot en utilisant uniquement un seul mot ! </p>
+                <p v-if="manche==2.5" class="mt-6 text-gray-500 dark:text-gray-300">Faites deviner le mot en utilisant uniquement des mimes ! </p>
+                <p v-if="manche==3.5" class="mt-6 text-gray-500 dark:text-gray-300">Jeu terminé, félicitations ! </p>
+
+                <button v-if="manche==0.5 | manche==1.5 | manche==2.5" v-on:click="endRound()" class="w-full col-end-7 col-span-2 px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-green-500 rounded-md hover:bg-green-400 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-50">Passer à l'étape suivante !</button>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- vue:js -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<!-- axios:js -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+<script>
+    const { createApp } = Vue
+    
+    createApp({
+        delimiters: ['[[', ']]'],
+        el: '#section',
+        data() {
+                return {
+                    step:"param",
+                    nbTeam : 2,
+                    nbWord : 10,
+                    time : 45,
+                    manualInput:true,
+                    words:[],
+                    printWords:false,
+                    printWordsPass:false,
+                    newWord:"",
+                    teams:{},
+                    current_word:0,
+                    current_team:"None",
+                    manche:0.5,
+                    wordsRemaining:[],
+                    timeRemaining:0,
+                    wordsValidate:[],
+                    wordsPass:[],
+                    go:false,
+                    isRoundEnd:true,
+                    resultValid:true,
+                    playing:true,
+                    stop:false,
+                    randomWordCategory:[],
+                }
+        },  
+        methods: {
+            changeStep: async function(step) {
+                try{
+                    if (step=="game") {
+                        await this.setUpGame()
+                    }
+                    this.step=step
+                }catch(e){
+                    console.log(e)
+                }
+                
+            },
+            delWord: async function(word){
+                this.words.splice(this.words.indexOf(word), 1);
+            },
+            addWord: async function(){
+                this.words.push(this.newWord)
+                this.newWord=""
+            },
+            transfertWord: async function(word){
+                if (this.wordsPass.includes(word)) {
+                    this.wordsValidate.push(word)
+                    this.wordsPass.splice(this.wordsPass.indexOf(word), 1);
+                    this.teams[this.current_team].score++
+                }else{
+                    this.wordsPass.push(word)
+                    this.wordsValidate.splice(this.wordsValidate.indexOf(word), 1);
+                    this.teams[this.current_team].score--
+                }
+            },
+            setUpGame: async function(){
+                for (i = 0; i < this.nbTeam; i++) {
+                    this.teams[i] = {
+                        "score":0,
+                        "name":"Equipe "+parseInt(i+1),
+                    }
+                }
+                this.setUpWords()
+                this.current_team=0
+            },
+            setUpWords: async function(){
+                for (i = 0; i < this.nbWord; i++) {
+                    this.wordsRemaining.push(this.words[i])
+                }
+                this.wordsValidate=[]
+                this.wordsPass=[]
+            },
+            startGame: async function(){
+                this.current_word=this.wordsRemaining[Math.floor(Math.random() * this.wordsRemaining.length)];
+                this.setTimer()
+                this.isRoundEnd=false
+                this.go=true
+            },
+            nextTeam: async function(){
+                if (this.current_team==(this.nbTeam-1)){
+                    this.current_team=0
+                }else{
+                    this.current_team = parseInt(this.current_team)+1
+                }
+                this.resultValid = true
+                this.playing=true
+            },
+            nextRound: async function(){
+                this.stop=true
+                this.playing=false
+                this.isRoundEnd=true
+                this.go=false
+                this.startGame
+                this.resultValid=false
+            },
+            endRound: async function(){
+                this.go=false
+                this.isRoundEnd=true
+                this.manche=this.manche+0.5
+                if (this.manche==2.5 | this.manche==1.5) {
+                    this.setUpWords()
+                }
+            },
+            valideWord: async function(){
+                this.wordsRemaining.splice(this.wordsRemaining.indexOf(this.current_word), 1);
+                this.teams[this.current_team].score++
+                this.wordsValidate.push(this.current_word)
+                if (this.current_word in this.wordsPass) {
+                    this.wordsPass.splice(this.wordsPass.indexOf(this.current_word), 1);
+                }
+                if(this.wordsRemaining.length==0){
+                    this.nextRound()
+                }else{
+                    this.current_word=this.wordsRemaining[Math.floor(Math.random() * this.wordsRemaining.length)];
+                }
+            },
+            passWord: async function(){
+                if (!this.wordsPass.includes(this.current_word)) {
+                    this.wordsPass.push(this.current_word)
+                }
+                this.current_word=this.wordsRemaining[Math.floor(Math.random() * this.wordsRemaining.length)];
+            },
+            setTimer: async function(){
+                this.timeRemaining=this.time
+                var timer = setInterval(function(){
+                    this.timeRemaining--
+                    if(this.wordsRemaining.length==0){
+                        clearInterval(timer);
+                    }
+                    if (this.timeRemaining==0) {
+                        clearInterval(timer);
+                        this.nextRound()
+                    }
+                }.bind(this), 1000);
+            },
+            addCategoryToRandomWordCategory: async function(word){
+                if (this.randomWordCategory.includes(word)) {
+                    this.randomWordCategory.splice(this.randomWordCategory.indexOf(word), 1);
+                }else{
+                    this.randomWordCategory.push(word)
+                }
+            },
+            generateRandomWords: async function(){
+                for(i=0;i<this.nbWord;i++){
+                    getRandomCategory = this.randomWordCategory[Math.floor(Math.random() * this.randomWordCategory.length)];
+                    if (getRandomCategory=="dictionnaire") {
+                        word = await this.getRandomWord()
+                        this.words.push(word)
+                    }     
+                }
+            },
+            generateWord: async function(){
+                result = await this.getRandomWord()
+                this.newWord = result
+            },
+            getRandomWord: async function(){
+                result = ""
+                await axios.get("https://trouve-mot.fr/api/random").then((response) => {
+                                result = response.data[0].name;
+                            })
+                return result
+            },
+            getRandomHobbies: async function(){
+                try{
+                    var result =""
+                    let config = {
+                        method: 'get',
+                        maxBodyLength: Infinity,
+                        url: 'https://api.api-ninjas.com/v1/hobbies',
+                        headers: { 
+                            'X-Api-Key': 'OYBbvOkFcsgUs5d5rior7g==oY0epQeHkt52CuiY'
+                        }
+                        };
+                        await axios.request(config)
+                            .then((response) => {
+                                result = response.data.hobby;
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    return result
+                }catch(e){
+                    console.log(e)
+                }
+            },
+            getRandomCelebrity: async function(){
+                try{
+                    let config = {
+                        method: 'get',
+                        maxBodyLength: Infinity,
+                        url: 'https://api.api-ninjas.com/v1/celebrity?nationality=fr',
+                        headers: { 
+                            'X-Api-Key': 'OYBbvOkFcsgUs5d5rior7g==oY0epQeHkt52CuiY'
+                        }
+                        };
+                        axios.request(config)
+                            .then((response) => {
+                            console.log(JSON.stringify(response.data));
+                            })
+                            .catch((error) => {
+                            console.log(error);
+                            });
+                }catch(e){
+                    console.log(e)
+                }
+            },
+            deeplTrad: async function(text){
+                let data = JSON.stringify({
+                "text": [
+                    text
+                ],
+                "target_lang": "FR",
+                "source_lang": "EN"
+                });
+
+                let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'https://api-free.deepl.com/v2/translate',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': 'DeepL-Auth-Key 9d9babf0-ea4b-4bf2-8be5-50b79e2cbbd9:fx',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                data : data
+                };
+
+                axios.request(config)
+                .then((response) => {
+                console.log(JSON.stringify(response.data));
+                })
+                .catch((error) => {
+                console.log(error);
+                });
+
+            }
+        },
+    }).mount('#section')
+
+    
+</script>
+
+</body>
+</html>
